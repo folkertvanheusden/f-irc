@@ -1,0 +1,37 @@
+; channellist
+color_channellist_default=WHITE
+color_channellist_minimized_server=RED
+color_channellist_newlines=YELLOW
+channellist_newlines_markchar=*
+channellist_window_width=15
+channellist_border=TRUE
+channellist_border_color=WHITE
+; do not specify for default values
+channellist_border_left_side=|
+channellist_border_right_side=|
+channellist_border_top_side=-
+channellist_border_bottom_side=-
+channellist_border_top_left_hand_corner=+
+channellist_border_top_right_hand_corner=+
+channellist_border_bottom_left_hand_corner=+
+channellist_border_bottom_right_hand_corner=+
+start_in_channellist_window=TRUE
+;
+; chat window
+; show time before each message?
+show_time=TRUE
+; not yet implemented
+show_date_when_changed=TRUE
+chat_window_border=TRUE
+chat_window_border_color=MAGENTA
+; chat_window_border_left_side=
+; chat_window_border_right_side=
+; chat_window_border_top_side=
+; chat_window_border_bottom_side=
+; chat_window_border_top_left_hand_corner=
+; chat_window_border_top_right_hand_corner=
+; chat_window_border_bottom_left_hand_corner=
+; chat_window_border_bottom_right_hand_corner=
+;
+; show clock in topic line?
+show_clock=TRUE

@@ -1,0 +1,17 @@
+Source: f-irc
+Maintainer: Folkert van Heusden <mail@vanheusden.com>
+Section: comm
+Priority: optional
+Standards-Version: 3.9.5
+Build-Depends: libncursesw5-dev, debhelper (>= 9.20130921)
+Homepage: http://www.vanheusden.com/f-irc/
+
+Package: f-irc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: znc
+Description: user-friendly IRC client for the console/terminal
+ F-IRC is an IRC client for terminals/command-line/console.
+ Its goal is to be as user friendly as possible with easy
+ navigation and keyboard shortcuts for quick navigation. It
+ has an as much a gentle learning curve as possible.

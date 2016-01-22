@@ -1,0 +1,18 @@
+Q: it crashes if I do this or that
+A: please please please send an e-mail to mail@vanheusden.com describing what you did when it crashed. I will do my best to fix it.
+
+Q: function keys (F1, F2, etc.) don't work in putty from within 'screen'
+A: go to change settings -> terminal -> keyboard and set function keys to 'xterm R6'
+
+Q: f-irc uses only +/- 15 colors!
+A: start it with TERM=xterm-256color
+   e.g.: TERM=xterm-256color f-irc
+
+Q: if I request a list of occurences of a word in the word-cloud, I get far more results than what the number behind the word says
+A: the count behind the word is the number of occurences in the time-interval in which this word cloud was determined. so older lines are not counted but do appear in the search.
+
+Q: when just started, f-irc responds sluggish
+A: at start, f-irc asks all joined channels for a list of users. processing of this data takes some time.
+
+Q: pressing the ESC key wreaks havoc
+A: the data produced by the ESC key is part of what is returned by other "special" keys (like F1-F12). As it is only part of it, ncurses (yes, not f-irc) expects more data to come in and waits for that. That's why pressing ESC makes f-irc look like it hang.

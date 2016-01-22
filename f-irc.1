@@ -1,0 +1,384 @@
+.\" Copyright Folkert van Heusden, 2006-2014
+.\"
+.\" This file may be copied under the conditions described
+.\" in the GNU GENERAL PUBLIC LICENSE, Version 1, September 1998
+.\" that should have been distributed together with this file.
+.\"
+.TH F-IRC 1 2014-11 "f-irc"
+.SH NAME
+f-irc - a user friendly irc client for a terminal/command-line/console
+.SH SYNOPSIS
+.BI "f-irc [" configurationfile.conf "]
+.sp
+options:
+.BI "configurationfile.conf"
+.sp
+.SH DESCRIPTION
+The program
+.B f-irc
+Is an irc client for a terminal/command-line/console. Its goal is to be as user friendly as possible with easy navigation and keyboard shortcuts for quick navigation. The learning curve should be as shallow as possible.
+
+.SH CONFIGURATION
+.TP
+Create
+.B ~/.firc
+or
+.B firc.conf.
+~/.firc will be automatically found at start, else enter it on the command-line:
+	f-irc my-fi-config.conf
+.TP
+.B server=host:port
+An IRC server to connect to.
+.TP
+.B auto_join=...
+Channel to automatically join.
+.TP
+.B send_after_login=...
+Command to send to the IRC server after connection setup. E.g. PRIVMSG #NickServ IDENTIFY my_password
+.TP
+.B username=...  password=...
+Used for authentication against IRC server
+.TP
+.B nick=...  name=...
+Identification settings.
+.TP
+.B description=...
+Will be shown instead of server name (if used).
+.TP
+.B part_message=...
+Message to send to the channel when leaving a channel.
+.TP
+.B server_exit_message=...
+Message to send to all channels when leaving a server.
+.TP
+.B allow_invite=true/false
+Should f-irc automatically open a channel when it receives an INVITE message?
+.TP
+.B ignore_mouse=true/false
+Wether to ignore mouse clicks(!). Default is true which makes f-irc ignore the mouse.
+.TP
+.B favorite=... ...
+This defines a favorite channel. First parameter is the server hostname or description, the second parameter the channel name (e.g. #linux.nl). Jump through your favorite channels using ^Q.
+.TP
+.B store_config_on_exit=true/false
+Wether to update the configuration-file at exit. Useful when adding channels and/or servers or changing nicks.
+.TP
+.B notice_in_serverchannel=true/false
+Most (all?) "NOTICE" messages are not personal messages but are from e.g.
+chanserv and nickserv and friends. If this parameter is set to true, no
+new channel-windows are created for them; they are put in the server-channel
+window instead.
+.TP
+.B highlight=on/off
+Wether lines with your nick name in them should be highlighted (green on black).
+.TP
+.B meta-colors=true/false
+Show server-messages and personal messages in a different color than generic messages.
+.TP
+.B all-colors=true/false
+Global color-switch.
+.TP
+.B nick-color=true/false
+When enabled, each line spoken will be colored with the color depending on who said it.
+.TP
+.B use_nonbasic_colors=true/false
+Use more than the 16 standard colors. Useful for "nick-color".
+.TP
+.B inverse_window_heading=true/false
+Show window-heading in reverse (true) or with ASCII-art (false).
+.TP
+.B show_parts=true/false
+Should f-irc show a message when someone leaves a channel?
+.TP
+.B show_mode_changes=true/false
+Should f-irc show a message when there's a mode change?
+.TP
+.B show_nick_change=true/false
+Should f-irc show a message when someone changes his/hers nick?
+.TP
+.B show_joins=true/false
+Should f-irc show a message when someone joins a channel?
+.TP
+.B auto_rejoin=true/false
+Allows you to automatically re-join a channel when you're kicked.
+.TP
+.B remember_channels=true/false
+Store any channels you were in when f-irc terminates.
+.TP
+.B grep_filter=server,channel,file,reg-exp
+If a line written in a server/channel with the specified regular expression, write that line to "file". server and or channel can be omitted but the comma needs to stay. For the server, f\-irc looks at the "description"\-field of a server.
+.TP
+.B ignore_file=...
+Points to a file with nicks to ignore:
+#channel nick
+etc.
+.TP
+.B auto_private_channel=on/off
+Automatically create a new channel window when using /MSG
+.TP
+.B dcc_path=...
+Path where to store files received via DCC.
+.TP
+.B max_channel_record_lines=...
+How many lines of text to store in the scroll-back buffer.
+.TP
+.B partial_highlight_match=yes/no
+Draw the whole line in green or only the parts that match the search term.
+.TP
+.B word_cloud_n=...
+How many items to put in the word-cloud window. Set to 0 to completely disable the word-cloud.
+.TP
+.B word_cloud_win_height=...
+Height of the word-cloud window. This excludes the 2 rows for the border.
+.TP
+.B word_cloud_refresh=...
+Interval in which to restart the word-cloud. Value is in seconds.
+.TP
+.B word_cloud_min_word_size=...
+Minimum size (in characters) of the words evaluated. A sensible value is 4.
+.TP
+.B default_colorpair=...,...
+Set the default color pair. Used for generic texts and borders. First is foreground, second is background. Note that you can either use a color name ("red", "green", etc.) or a hexadecimal color triplet with values 000...3e7 (that may sound strange but ncurses use the range 0...999) with a '#' in front of it. E.g. #1230fe2fa,white
+.TP
+.B highlight_colorpair=...,...
+Color pair used when your nick is mentioned.
+.TP
+.B meta_colorpair=...,...
+Color pair used when server messages are shown (joins, parts, etc)
+.TP
+.B error_colorpair=...,...
+Colors to use when there's an error to show
+.TP
+.B jumpy_navigation=true/false
+^W/R/Z/X: jumpy navigation
+.TP
+.B temp_colorpair=...,...
+Temporary color;
+.TP
+.B dictionary_file=...
+Dictionary file to use for tab completion, see below.
+.TP
+.B log_dir=
+Path where to store chats logging.
+.TP
+.B mark_personal_messages=yes/no
+If someone send you a message in a personal channel ("query"), should f-irc then highlight that channel as if a personal message was sent (default is no).
+
+.SH COLORS
+Available colors: black, blue, cyan, default, green, magenta, red, white, yellow.
+
+.SH DICTIONARY
+F-irc can, apart from channel/nick/command also do tab-completion on a configurable list of words. With "dictionary_file=..." you can select a text-file with 2 or more columns. In the first column you put the word that f-irc needs to look for when pressing tab. Then when there's a match, that word will be replaced by what's in the 2nd (and 3d, etc.) column.
+
+.SH USAGE
+When F-IRC is started, you'll see a list of channels and servers on the right. On the left a large box with what is written by people. The line at the top is the topic of that channel and the line at the bottom is where you write the things you would like to appear in the channels.
+.TP
+If there's a reverse color border around the channel-list, then it is selected. That means that you can navigate through it with the cursor keys. Press right to enter a channel. Press right again on that channel to get a list of names in that channel. Press right once again to get a list of actions to perform on that user. Press left to exit the actions menu. Another left to return to the channel-list. Use up cursor/down cursor keys to navigate through the list. 'home' jumps to the top of the list, 'end' to the bottom.
+.TP
+Press left on a server to "fold it": this hides the channels. Press the right cursor key to unfold it. When a server is not folded and it is already selected, press "right" again to get a menu with server-options: reconnect a server for example and disconnect it.
+.TP
+In the "scroll back"/"search" windows you can press '/' to search in that window and 'w' to write the contents of a window to a file.
+.TP
+.B ^X
+means: press ctrl key and press x while still holding ctrl.
+.TP
+If the channel/name-list is selected, you can enter ^N: you can then move the cursor from right to left and back to navigate through the sentence you're typing. If the edit-line is selected, then the border around the names/channels is no longer reverse, also the '>' left from- and the '>' right from the edit line are in reverse video.
+.TP
+If the edit-line is selected, you can press up cursor key and down left cursor key to browse through older lines you wrote. Also "home" and "end" work like they should.
+.TP
+.B ^A
+moves the cursor to the left,
+.B ^E
+moves the cursor to the right
+.B ^D
+deletes the character under the cursor. This is like how the bash-shell behaves.
+.TP
+.B ^U
+Clear input line. Press second time to undo clear.
+.TP
+If there's something new in a channel, a '*' is put in front of the server or channel name.
+.TP
+.B ^Q
+jump to your next favorite channel (see the "favorite=... ..." configuration file parameter).
+.TP
+.B ^W
+lets you jump to the next channel in which new lines were written.
+.TP
+.B ^R
+like ^W but searching backwards
+.TP
+.B ^Z
+lets you jump to the next channel in which your (nick-)name was mentioned
+.TP
+.B ^X
+like ^Z but searching backwards
+.TP
+.B ^T
+jump back to the previously selected channel
+.TP
+.B ^O
+lets f-irc remove all the *'s
+.TP
+.B ^F
+lets you scroll-back in what was written by others
+.TP
+.B ^B
+lets you scroll-back in what you wrote. you can then select a line and press enter to copy it to your edit-line
+.TP
+.B ^Y
+Enable/disable "only show channels with new messages".
+.TP
+.B ^V
+Enter 1 character. Used when entering ascii values < 32, e.g. ^B for bold.
+.TP
+Press
+.B TAB
+for auto-completion of commands (e.g. /TOPIC, /TIME, etc.) and nick names
+.TP
+Press
+.B ^G
+to close a channel.
+.TP
+Press
+.B ^L
+to redraw the screen.
+.TP
+Press
+.B ^C
+to terminate the program. Or enter /EXIT (or /exit, commands are not case sensitive).
+.TP
+When you enter:
+.B @/...
+then /... is send
+.br
+.B @@...
+then @... is send
+.br
+.B @...
+then the program will look for a channel/server with '...' in its name and then change the channel to that one. you can enter
+.B ^J
+to let it jump to the next channel with that
+.TP
+.B ^P
+add a markerline to the current channel
+.TP
+.B F2
+Store current configuration on disk
+.TP
+.B F3
+Add a new server
+.TP
+.B F4
+Switch to edit-line (shortcut for ^N)
+.TP
+.B F5
+Redraw screen
+.TP
+.B F6
+Search in all windows
+.TP
+.B F7
+Close all channels with only "NOTICE" messages. Those are most oftehn the channels with messages that come from bots and servers.
+.TP
+.B F8
+Configure f-irc
+.TP
+.B F9
+Undo the close of the last closed channel
+.TP
+.B F10 ^N
+Toggle between channel-list, edit-line and word-cloud (if enabled)
+.TP
+.B F12
+Add markerline to all channels on all servers
+
+.SH USAGE
+Not only messages but also commands can be entered in the line at the bottom. Above @... was mentioned and also the TAB-completion was mentioned. Apart from that also a couple of commands weere implemented:
+.B /ADDSERVER
+Adds a server
+.TP
+.B /AWAY
+Set yout away status.
+.TP
+.B /BAN
+Ban a user from the current channel.
+.TP
+.B /CTCP
+Send a CTCP command. E.g. /CTCP flok VERSION
+.TP
+.B /DCCSEND
+Send a file to a user using DCC.
+.TP
+.B /EXIT
+Terminate the program.
+.TP
+.B /IGNORE
+Ignore a user.
+.TP
+.B /INFO
+This asks info of an IRC server.
+.TP
+.B /INVITE
+Invite a user to a channel.
+.TP
+.B /JOIN
+Enter a channel.
+.TP
+.B /KICK
+Kick a user from a channel
+.TP
+.B /LEAVE
+Leave a channel. Short-cut is ^G.
+.TP
+.B /LINKS
+Lists servers to which this irc server is connected.
+.TP
+.B /LIST
+Ask server for a list of channels.
+.TP
+.B /MODE
+Sets a mode on a user.
+.TP
+.B /MSG
+Send a private message to a user.
+.TP
+.B /NICK
+Set your nick for that server.
+.TP
+.B /NOTICE
+Send a notice to a user.
+.TP
+.B /PING
+Ping a user.
+.TP
+.B /SAVECONFIG
+Store current configuration on disk.
+.TP
+.B /SEARCHALL
+Search for a text in all channels and servers.
+.TP
+.B /SPAM
+Send a private message to everybody in a channel. People don't like it and you will probably be banned.
+.TP
+.B /TIME
+Ask an IRC server for its notion of time.
+.TP
+.B /TOPIC
+Set the topic of a channel
+.TP
+.B /UNIGNORE
+Un-ignore a user.
+.TP
+.B /VERSION
+Ask parameters of a server.
+.TP
+.B /WHOIS x
+Asks the server who 'x' is.
+
+.SH SEE ALSO
+.BR http://www.vanheusden.com/fi/
+
+.SH MISC
+F-IRC was written by folkert@vanheusden.com
+.PP
+Please be nice too other people.
