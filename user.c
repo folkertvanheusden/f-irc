@@ -1669,6 +1669,8 @@ void edit_server(int sr)
 				gsr(sr) -> server_port = atoi(n);
 
 			restart_required = TRUE;
+
+			myfree(n);
 		}
 		else if (c == 'U')
 		{
@@ -2371,7 +2373,12 @@ BOOL configure_firc(void)
 
 						pair_content(*pi, &cfg, &cbg);
 
-						sprintf(&str_out[val_pos], "%s,%s", color_to_str(cfg), color_to_str(cbg));
+						{
+							char *cfstr = color_to_str(cfg), *cbstr = color_to_str(cbg);
+							sprintf(&str_out[val_pos], "%s,%s", cfstr, cbstr);
+							myfree(cfstr);
+							myfree(cbstr);
+						}
 						break;
 				}
 

@@ -163,6 +163,7 @@ int process_server_do_line(int sr, const char *string)
 		if (!space)
 		{
 			LOG("Line consists of only a prefix?\n");
+			myfree(prefix);
 			return -1;
 		}
 
@@ -498,6 +499,8 @@ int process_server_do_line(int sr, const char *string)
 
 		if (keep_channels_sorted)
 			sort_channels(sr);
+
+		myfree(nick);
 	}
 	else if (strcmp(cmd, "INVITE") == 0)	/* INVITE */
 	{

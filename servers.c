@@ -577,6 +577,7 @@ int process_server(int cur_server)
 			if (process_server_do_line(cur_server, line) == -1)
 			{
 				LOG("process_server_do_line returned -1\n");
+				myfree(line);
 				return -1;
 			}
 

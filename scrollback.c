@@ -168,11 +168,9 @@ void copy_to_clipboard(const buffer *pb, BOOL with_channel)
 		else if (getenv("DISPLAY") == NULL)
 			popup_notify(FALSE, "Cannot copy to clipboard\n\"DISPLAY\" environment variable is not set.\nThis variable is normally set by the X server.\n");
 		else
-		{
 			send_to_xclip(data);
 
-			free(data);
-		}
+		free(data);
 	}
 }
 
